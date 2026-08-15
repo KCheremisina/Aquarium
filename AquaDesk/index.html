@@ -1,40 +1,75 @@
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>🐠 Аквариум с рыбками - PRO версия</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
-
 <body>
   <div class="widget-hint">💡 Нажми F1, чтобы включить режим виджета (клик сквозь)</div>
-
+  
   <div id="header">
     <h1>🐠 АКВАРИУМ PRO</h1>
-    <p>Кликните по аквариуму, чтобы добавить корм | Рыбки плавают стайками (строго до 5 в стае)!</p.>
+    <p>Кликните по аквариуму, чтобы добавить корм | Рыбки плавают стайками (строго до 5 в стае)!</p>
   </div>
-
+  
   <div id="aquarium-container"></div>
 
-  <div class="controls-panel">
-    <button class="btn" id="btnFeed">🍕 Бросить корм</button>
-    <button class="btn" id="btnAddFish">🐟 Добавить рыбку</button>
-    <button class="btn" id="btnBubble">💨 Пузырьки</button>
-    <button class="btn" id="btnClear">🗑 Очистить корм</button>
-    <button class="btn btn-primary" id="btnNightMode">🌙 Ночной режим</button>
-    <div class="auto-feed">
-      <input type="checkbox" id="autoFeedToggle">
-      <label for="autoFeedToggle">🤖 Автокорм (каждые 15 сек)</label>
+  <!-- Главные кнопки управления -->
+  <div class="main-controls">
+    <button class="btn-main" id="btnSettings">⚙️ Настройки</button>
+    <button class="btn-main" id="btnStats">📊 Статистика</button>
+  </div>
+
+  <!-- Панель настроек (выезжает снизу) -->
+  <div class="bottom-panel" id="settingsPanel">
+    <div class="panel-header">
+      <h3>⚙️ Настройки</h3>
+      <button class="close-btn" id="closeSettings">✕</button>
+    </div>
+    <div class="panel-content">
+      <button class="btn" id="btnFeed">🍕 Бросить корм</button>
+      <button class="btn" id="btnAddFish">🐟 Добавить рыбку</button>
+      <button class="btn" id="btnBubble">💨 Пузырьки</button>
+      <button class="btn" id="btnClear">🗑 Очистить корм</button>
+      <button class="btn btn-primary" id="btnNightMode">🌙 Ночной режим</button>
+      <div class="auto-feed">
+        <input type="checkbox" id="autoFeedToggle">
+        <label for="autoFeedToggle">🤖 Автокорм (каждые 15 сек)</label>
+      </div>
     </div>
   </div>
 
-  <div class="stats-panel">
-    <div class="stat">🐠 Рыбок: <span id="fishCount">0</span></div>
-    <div class="stat">🍕 Корма: <span id="foodCount">0</span></div>
-    <div class="stat">🍽️ Съедено: <span id="eatenCount">0</span></div>
-    <div class="stat">🏆 Достижения: <span id="achievementCount">0</span></div>
+  <!-- Панель статистики (выезжает снизу) -->
+  <div class="bottom-panel" id="statsPanel">
+    <div class="panel-header">
+      <h3>📊 Статистика</h3>
+      <button class="close-btn" id="closeStats">✕</button>
+    </div>
+    <div class="panel-content stats-content">
+      <div class="stat-item">
+        <span class="stat-icon">🐠</span>
+        <span class="stat-label">Рыбок в аквариуме:</span>
+        <span class="stat-value" id="fishCount">0</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-icon">🍕</span>
+        <span class="stat-label">Корма на дне:</span>
+        <span class="stat-value" id="foodCount">0</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-icon">🍽️</span>
+        <span class="stat-label">Всего съедено:</span>
+        <span class="stat-value" id="eatenCount">0</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-icon">🏆</span>
+        <span class="stat-label">Достижений:</span>
+        <span class="stat-value" id="achievementCount">0</span>
+      </div>
+      <div class="achievements-list" id="achievementsList"></div>
+    </div>
   </div>
 
   <div class="instruction">
@@ -44,5 +79,4 @@
   <script src="https://pixijs.download/v7.3.2/pixi.min.js"></script>
   <script type="module" src="js/main.js"></script>
 </body>
-
 </html>

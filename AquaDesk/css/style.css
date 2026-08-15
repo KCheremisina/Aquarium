@@ -1,198 +1,373 @@
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      user-select: none;
-    }
-
-
-    body {
-      background: transparent !important;
-      margin: 0;
-      padding: 10px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      overflow: hidden;
-      height: 100vh;
-    }
-
-    #header {
-      text-align: center;
-      margin-bottom: 10px;
-    }
-
-    #header h1 {
-      color: #a0e7ff;
-      font-size: 1.5rem;
-      font-weight: 300;
-      letter-spacing: 3px;
-      text-shadow: 0 0 20px rgba(160, 231, 255, 0.6);
-    }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  user-select: none;
+}
 
 
+body {
+  background: transparent !important;
+  margin: 0;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  overflow: hidden;
+  height: 100vh;
+}
 
-    #header p {
-      color: #88c8dc;
-      font-size: 0.8rem;
-      margin-top: 5px;
-    }
+#header {
+  text-align: center;
+  margin-bottom: 10px;
+}
 
-    #aquarium-container {
-      border-radius: 15px;
-      overflow: hidden;
-      box-shadow: 0 0 30px rgba(75, 130, 200, 0.25), 0 10px 40px rgba(0, 0, 0, 0.5);
-      border: 2px solid rgba(75, 130, 200, 0.4);
-      cursor: pointer;
-      /* Убираем лишние отступы, которые сдвигали аквариум */
-      margin: 0 auto;
-    }
+#header h1 {
+  color: #a0e7ff;
+  font-size: 1.5rem;
+  font-weight: 300;
+  letter-spacing: 3px;
+  text-shadow: 0 0 20px rgba(160, 231, 255, 0.6);
+}
 
 
-    .controls-panel {
-      margin-top: 10px;
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
 
-    .btn {
-      padding: 8px 16px;
-      border: 1px solid rgba(100, 150, 230, 0.5);
-      background: rgba(30, 60, 100, 0.3);
-      color: #bfe4ff;
-      border-radius: 25px;
-      cursor: pointer;
-      font-size: 0.85rem;
-      transition: all 0.3s ease;
-      backdrop-filter: blur(10px);
-      font-weight: 500;
-    }
+#header p {
+  color: #88c8dc;
+  font-size: 0.8rem;
+  margin-top: 5px;
+}
 
-    .btn:hover {
-      background: rgba(70, 120, 200, 0.4);
-      box-shadow: 0 0 15px rgba(70, 120, 200, 0.5);
-      transform: translateY(-2px);
-      color: #ffffff;
-    }
+#aquarium-container {
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 0 30px rgba(75, 130, 200, 0.25), 0 10px 40px rgba(0, 0, 0, 0.5);
+  border: 2px solid rgba(75, 130, 200, 0.4);
+  cursor: pointer;
+  /* Убираем лишние отступы, которые сдвигали аквариум */
+  margin: 0 auto;
+}
 
-    .btn-primary {
-      background: rgba(70, 120, 200, 0.5);
-      border-color: rgba(100, 150, 255, 0.8);
-    }
 
-    .stats-panel {
-      background: rgba(0, 0, 0, 0.5);
-      backdrop-filter: blur(5px);
-      padding: 6px 15px;
-      border-radius: 30px;
-      margin-top: 10px;
-      display: flex;
-      gap: 15px;
-      flex-wrap: wrap;
-      justify-content: center;
-      font-size: 0.85rem;
-    }
+.controls-panel {
+  margin-top: 10px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
 
-    .stat {
-      color: #88b0d0;
-    }
+.btn {
+  padding: 8px 16px;
+  border: 1px solid rgba(100, 150, 230, 0.5);
+  background: rgba(30, 60, 100, 0.3);
+  color: #bfe4ff;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  font-weight: 500;
+}
 
-    .stat span {
-      color: #ffd966;
-      font-weight: bold;
-      font-size: 1rem;
-    }
+.btn:hover {
+  background: rgba(70, 120, 200, 0.4);
+  box-shadow: 0 0 15px rgba(70, 120, 200, 0.5);
+  transform: translateY(-2px);
+  color: #ffffff;
+}
 
-    .auto-feed {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 12px;
-      background: rgba(30, 60, 100, 0.3);
-      border-radius: 25px;
-      backdrop-filter: blur(5px);
-    }
+.btn-primary {
+  background: rgba(70, 120, 200, 0.5);
+  border-color: rgba(100, 150, 255, 0.8);
+}
 
-    .auto-feed label {
-      color: #bfe4ff;
-      cursor: pointer;
-      font-size: 0.85rem;
-    }
+.stats-panel {
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  padding: 6px 15px;
+  border-radius: 30px;
+  margin-top: 10px;
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  justify-content: center;
+  font-size: 0.85rem;
+}
 
-    .auto-feed input {
-      cursor: pointer;
-      width: 16px;
-      height: 16px;
-    }
+.stat {
+  color: #88b0d0;
+}
 
-    .instruction {
-      color: #88c8dc;
-      font-size: 0.75rem;
-      margin-top: 8px;
-      text-align: center;
-    }
+.stat span {
+  color: #ffd966;
+  font-weight: bold;
+  font-size: 1rem;
+}
 
-    @keyframes notification {
-      0% {
-        opacity: 1;
-        transform: translateY(0);
-      }
+.auto-feed {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  background: rgba(30, 60, 100, 0.3);
+  border-radius: 25px;
+  backdrop-filter: blur(5px);
+}
 
-      100% {
-        opacity: 0;
-        transform: translateY(-30px);
-      }
-    }
+.auto-feed label {
+  color: #bfe4ff;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
 
-    .notification {
-      position: fixed;
-      top: 10px;
-      right: 10px;
-      background: rgba(0, 0, 0, 0.8);
-      color: #ffd966;
-      padding: 8px 15px;
-      border-radius: 8px;
-      border-left: 3px solid #ffd966;
-      font-size: 0.85rem;
-      animation: notification 2s ease-out forwards;
-      pointer-events: none;
-      z-index: 1000;
-    }
+.auto-feed input {
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
+}
 
-    /* --- Стили для режима виджета (активируется через F10) --- */
-    body.widget-mode #header,
-    body.widget-mode .controls-panel,
-    body.widget-mode .stats-panel,
-    body.widget-mode .instruction {
-      display: none !important;
-      /* Скрываем весь интерфейс */
-    }
+.instruction {
+  color: #88c8dc;
+  font-size: 0.75rem;
+  margin-top: 8px;
+  text-align: center;
+}
 
-    body.widget-mode #aquarium-container {
-      box-shadow: none !important;
-      /* Убираем тени, чтобы не было "квадрата" */
-      border: none !important;
-      /* Убираем рамку */
-      cursor: default !important;
-    }
+@keyframes notification {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 
-    /* Подсказка о том, как вернуть интерфейс */
-    .widget-hint {
-      position: fixed;
-      top: 10px;
-      left: 10px;
-      color: rgba(160, 231, 255, 0.5);
-      font-size: 0.75rem;
-      pointer-events: none;
-      opacity: 0;
-      transition: opacity 0.5s ease;
-    }
+  100% {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+}
 
-    body:not(.widget-mode) .widget-hint {
-      opacity: 1;
-      /* Показываем подсказку только в обычном режиме */
-    }
+.notification {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #ffd966;
+  padding: 8px 15px;
+  border-radius: 8px;
+  border-left: 3px solid #ffd966;
+  font-size: 0.85rem;
+  animation: notification 2s ease-out forwards;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+/* --- Стили для режима виджета (активируется через F10) --- */
+body.widget-mode #header,
+body.widget-mode .controls-panel,
+body.widget-mode .stats-panel,
+body.widget-mode .instruction {
+  display: none !important;
+  /* Скрываем весь интерфейс */
+}
+
+body.widget-mode #aquarium-container {
+  box-shadow: none !important;
+  /* Убираем тени, чтобы не было "квадрата" */
+  border: none !important;
+  /* Убираем рамку */
+  cursor: default !important;
+}
+
+/* Подсказка о том, как вернуть интерфейс */
+.widget-hint {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  color: rgba(160, 231, 255, 0.5);
+  font-size: 0.75rem;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+body:not(.widget-mode) .widget-hint {
+  opacity: 1;
+  /* Показываем подсказку только в обычном режиме */
+}
+
+/* === Главные кнопки управления === */
+.main-controls {
+  margin-top: 15px;
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+}
+
+.btn-main {
+  padding: 12px 30px;
+  border: 2px solid rgba(100, 150, 230, 0.6);
+  background: rgba(30, 60, 100, 0.4);
+  color: #bfe4ff;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.btn-main:hover {
+  background: rgba(70, 120, 200, 0.5);
+  box-shadow: 0 6px 20px rgba(70, 120, 200, 0.6);
+  transform: translateY(-3px);
+  color: #ffffff;
+  border-color: rgba(100, 150, 255, 0.9);
+}
+
+.btn-main.active {
+  background: rgba(70, 120, 200, 0.6);
+  border-color: rgba(100, 150, 255, 1);
+  box-shadow: 0 0 20px rgba(70, 120, 200, 0.8);
+}
+
+/* === Панели, выезжающие снизу === */
+.bottom-panel {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%) translateY(100%);
+  width: 90%;
+  max-width: 700px;
+  background: rgba(10, 30, 60, 0.95);
+  backdrop-filter: blur(15px);
+  border-radius: 20px 20px 0 0;
+  border: 2px solid rgba(75, 130, 200, 0.4);
+  border-bottom: none;
+  box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.6);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 100;
+  padding: 20px;
+}
+
+.bottom-panel.visible {
+  transform: translateX(-50%) translateY(0);
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(75, 130, 200, 0.3);
+}
+
+.panel-header h3 {
+  color: #a0e7ff;
+  font-size: 1.3rem;
+  font-weight: 500;
+  margin: 0;
+  text-shadow: 0 0 10px rgba(160, 231, 255, 0.5);
+}
+
+.close-btn {
+  background: rgba(255, 100, 100, 0.2);
+  border: 1px solid rgba(255, 100, 100, 0.5);
+  color: #ff6b6b;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.close-btn:hover {
+  background: rgba(255, 100, 100, 0.4);
+  transform: rotate(90deg);
+}
+
+.panel-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+}
+
+/* === Стили для панели статистики === */
+.stats-content {
+  flex-direction: column;
+  gap: 15px;
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+  background: rgba(30, 60, 100, 0.3);
+  border-radius: 15px;
+  border: 1px solid rgba(75, 130, 200, 0.3);
+  width: 100%;
+  transition: all 0.3s ease;
+}
+
+.stat-item:hover {
+  background: rgba(70, 120, 200, 0.3);
+  transform: translateX(5px);
+}
+
+.stat-icon {
+  font-size: 1.8rem;
+  filter: drop-shadow(0 0 8px rgba(160, 231, 255, 0.5));
+}
+
+.stat-label {
+  color: #88c8dc;
+  font-size: 0.95rem;
+  flex: 1;
+}
+
+.stat-value {
+  color: #ffd966;
+  font-size: 1.4rem;
+  font-weight: bold;
+  text-shadow: 0 0 10px rgba(255, 217, 102, 0.5);
+}
+
+.achievements-list {
+  margin-top: 10px;
+  padding: 15px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 15px;
+  width: 100%;
+}
+
+.achievements-list h4 {
+  color: #ffd966;
+  margin: 0 0 10px 0;
+  font-size: 1rem;
+}
+
+.achievement-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  margin: 4px;
+  background: rgba(255, 217, 102, 0.2);
+  border: 1px solid rgba(255, 217, 102, 0.5);
+  border-radius: 20px;
+  color: #ffd966;
+  font-size: 0.85rem;
+}
+
+/* === Скрываем старые элементы в режиме виджета === */
+body.widget-mode .main-controls,
+body.widget-mode .bottom-panel {
+  display: none !important;
+}

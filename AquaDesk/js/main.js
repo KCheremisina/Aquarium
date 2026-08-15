@@ -1,9 +1,9 @@
 import { CONFIG } from './config.js';
 import { state } from './state.js';
 import { createFish, createFood, createBubble } from './entities.js';
-import { scareFish, performScatter, scheduleScatter, loadStats, updateStats, showNotification } from './logic.js';
+import { scareFish, scheduleScatter, loadStats, updateStats, showNotification } from './logic.js';
 
-
+// 1. Инициализация PixiJS
 const app = new PIXI.Application({
     width: CONFIG.W,
     height: CONFIG.H,
@@ -21,8 +21,7 @@ app.view.style.height = '100%';
 
 document.getElementById('aquarium-container').appendChild(app.view);
 
-document.getElementById('aquarium-container').appendChild(app.view);
-
+// 2. Создание слоев
 state.layers.fishLayer = new PIXI.Container();
 state.layers.foodLayer = new PIXI.Container();
 state.layers.bubbleLayer = new PIXI.Container();
@@ -31,14 +30,15 @@ state.layers.lightLayer = new PIXI.Container();
 state.layers.effectLayer = new PIXI.Container();
 
 app.stage.addChild(
-    state.layers.lightLayer,
-    state.layers.plantLayer,
-    state.layers.bubbleLayer,
-    state.layers.foodLayer,
-    state.layers.effectLayer,
+    state.layers.lightLayer, 
+    state.layers.plantLayer, 
+    state.layers.bubbleLayer, 
+    state.layers.foodLayer, 
+    state.layers.effectLayer, 
     state.layers.fishLayer
 );
 
+// 3. Окружение
 const bgGfx = new PIXI.Graphics();
 bgGfx.beginFill(0x0c2340, 0.3).drawRect(0, 0, CONFIG.W, CONFIG.H).endFill();
 app.stage.addChildAt(bgGfx, 0);
@@ -50,7 +50,6 @@ for (let i = 0; i <= CONFIG.W; i += 30) {
 }
 sandGfx.lineTo(CONFIG.W, CONFIG.H).lineTo(0, CONFIG.H).closePath().endFill();
 app.stage.addChildAt(sandGfx, 1);
-
 
 for (let i = 0; i < 40; i++) {
     const pgfx = new PIXI.Graphics();
@@ -64,18 +63,18 @@ function createSeaweed(x, baseHeight) {
     const plant = new PIXI.Container();
     const h = baseHeight * (1 + (Math.random() - 0.5) * 0.4);
     const segments = Math.max(4, Math.floor(h / 20));
-    let prevX = x, prevY = CONFIG.H - 20;
-
+    let prevX = x, prevY = CONFIG.H - 30;
+    
     for (let i = 0; i < segments; i++) {
         const sway = Math.sin(i * 0.5) * 10 + Math.random() * 8;
         const newX = x + sway;
-        const newY = CONFIG.H - 20 - (i + 1) * (h / segments);
+        const newY = CONFIG.H - 30 - (i + 1) * (h / segments);
         const segGfx = new PIXI.Graphics();
         segGfx.lineStyle(4 + (1 - i / segments) * 4, 0x2D8B46, 0.7);
         segGfx.moveTo(prevX, prevY);
         segGfx.lineTo(newX, newY);
         plant.addChild(segGfx);
-
+        
         if (i === segments - 1) {
             const leaf = new PIXI.Graphics();
             leaf.beginFill(0x3DA65A, 0.8);
@@ -111,23 +110,98 @@ for (let i = 0; i < 5; i++) {
     lightRays.push({ gfx: rayGfx, speed: 0.3 + Math.random() * 0.5, offset: Math.random() * Math.PI * 2 });
 }
 
+// 4. Инициализация состояния
 loadStats();
 for (let i = 0; i < 6; i++) createFish();
 
-document.getElementById('autoFeedToggle').addEventListener('change', (e) => {
-    if (e.target.checked) {
-        state.autoFeedInterval = setInterval(() => {
-            const bx = 100 + Math.random() * (CONFIG.W - 200);
-            for (let i = 0; i < 5; i++) createFood(bx + (Math.random() - 0.5) * 80, -10 - Math.random() * 30);
-            showNotification("🤖 Автокорм: брошена порция корма!");
-        }, 15000);
-    } else {
-        if (state.autoFeedInterval) clearInterval(state.autoFeedInterval);
+// 5. Логика панелей
+const settingsPanel = document.getElementById('settingsPanel');
+const statsPanel = document.getElementById('statsPanel');
+const btnSettings = document.getElementById('btnSettings');
+const btnStats = document.getElementById('btnStats');
+const closeSettings = document.getElementById('closeSettings');
+const closeStats = document.getElementById('closeStats');
+
+function togglePanel(panel, button) {
+    const isVisible = panel.classList.contains('visible');
+    
+    settingsPanel.classList.remove('visible');
+    statsPanel.classList.remove('visible');
+    btnSettings.classList.remove('active');
+    btnStats.classList.remove('active');
+    
+    if (!isVisible) {
+        panel.classList.add('visible');
+        button.classList.add('active');
+        
+        if (panel === statsPanel) {
+            updateStats();
+            updateAchievementsList();
+        }
     }
+}
+
+function updateAchievementsList() {
+    const list = document.getElementById('achievementsList');
+    if (state.achievements.length === 0) {
+        list.innerHTML = '<p style="color: #88c8dc; text-align: center; margin: 0;">Пока нет достижений. Продолжайте кормить рыбок!</p>';
+        return;
+    }
+    
+    const achievementNames = {
+        'school_master': '🏆 Повелитель стаи (10 рыбок)',
+        'generous': '🏆 Щедрая душа (50 корма)',
+        'feast': '🏆 Королевский пир (100 корма)',
+        'aquarium_master': '🏆 Аквариумный магнат (20 рыбок)'
+    };
+    
+    list.innerHTML = '<h4>Ваши достижения:</h4>' + 
+        state.achievements.map(a => `<span class="achievement-badge">${achievementNames[a] || a}</span>`).join('');
+}
+
+// 6. ОБРАБОТЧИКИ СОБЫТИЙ (только один раз!)
+
+// Главные кнопки
+btnSettings.addEventListener('click', () => togglePanel(settingsPanel, btnSettings));
+btnStats.addEventListener('click', () => togglePanel(statsPanel, btnStats));
+
+// Крестики закрытия
+closeSettings.addEventListener('click', () => {
+    settingsPanel.classList.remove('visible');
+    btnSettings.classList.remove('active');
+});
+
+closeStats.addEventListener('click', () => {
+    statsPanel.classList.remove('visible');
+    btnStats.classList.remove('active');
+});
+
+// Кнопки внутри панели настроек
+document.getElementById('btnFeed').addEventListener('click', () => {
+    const bx = 100 + Math.random() * (CONFIG.W - 200);
+    for (let i = 0; i < 8; i++) createFood(bx + (Math.random() - 0.5) * 80, -10 - Math.random() * 30);
+});
+
+document.getElementById('btnAddFish').addEventListener('click', () => {
+    createFish();
+});
+
+document.getElementById('btnBubble').addEventListener('click', () => {
+    for (let i = 0; i < 20; i++) createBubble(100 + Math.random() * (CONFIG.W - 200), CONFIG.H + Math.random() * 50);
+});
+
+document.getElementById('btnClear').addEventListener('click', () => {
+    while (state.foods.length) {
+        const f = state.foods.pop();
+        state.layers.foodLayer.removeChild(f);
+        f.destroy();
+    }
+    updateStats();
 });
 
 const nightFilter = new PIXI.filters.ColorMatrixFilter();
 nightFilter.brightness(0.4, false);
+
 document.getElementById('btnNightMode').addEventListener('click', () => {
     state.isNightMode = !state.isNightMode;
     if (state.isNightMode) {
@@ -143,6 +217,33 @@ document.getElementById('btnNightMode').addEventListener('click', () => {
     }
 });
 
+document.getElementById('autoFeedToggle').addEventListener('change', (e) => {
+    // Очищаем старый интервал
+    if (state.autoFeedInterval) {
+        clearInterval(state.autoFeedInterval);
+        state.autoFeedInterval = null;
+    }
+    
+    if (e.target.checked) {
+        state.autoFeedInterval = setInterval(() => {
+            const bx = 100 + Math.random() * (CONFIG.W - 200);
+            for (let i = 0; i < 3; i++) {
+                createFood(bx + (Math.random() - 0.5) * 80, -10 - Math.random() * 30);
+            }
+            showNotification("🤖 Автокорм: брошена порция корма!");
+        }, 15000);
+    }
+});
+
+// Клик по аквариуму закрывает панели
+document.getElementById('aquarium-container').addEventListener('click', () => {
+    settingsPanel.classList.remove('visible');
+    statsPanel.classList.remove('visible');
+    btnSettings.classList.remove('active');
+    btnStats.classList.remove('active');
+});
+
+// Клики по canvas
 app.view.addEventListener('click', (e) => {
     if (e.button === 0) {
         const rect = app.view.getBoundingClientRect();
@@ -164,26 +265,7 @@ app.view.addEventListener('contextmenu', (e) => {
     return false;
 });
 
-document.getElementById('btnFeed').addEventListener('click', () => {
-    const bx = 100 + Math.random() * (CONFIG.W - 200);
-    for (let i = 0; i < 8; i++) createFood(bx + (Math.random() - 0.5) * 80, -10 - Math.random() * 30);
-});
-
-document.getElementById('btnAddFish').addEventListener('click', () => createFish());
-
-document.getElementById('btnBubble').addEventListener('click', () => {
-    for (let i = 0; i < 20; i++) createBubble(100 + Math.random() * (CONFIG.W - 200), CONFIG.H + Math.random() * 50);
-});
-
-document.getElementById('btnClear').addEventListener('click', () => {
-    while (state.foods.length) {
-        const f = state.foods.pop();
-        state.layers.foodLayer.removeChild(f);
-        f.destroy();
-    }
-    updateStats();
-});
-
+// 7. Игровой цикл
 app.ticker.add((delta) => {
     state.time += delta * 0.016;
 
@@ -235,7 +317,7 @@ app.ticker.add((delta) => {
     for (const fish of state.fishes) {
         fish.hungerTimer += delta * 0.016;
         let nearestFood = null, nearestDist = Infinity;
-
+        
         for (const f of state.foods) {
             if (!f.eaten) {
                 const dist = Math.hypot(f.x - fish.x, f.y - fish.y);
@@ -384,6 +466,7 @@ app.ticker.add((delta) => {
     }
 });
 
+// 8. Интеграция с Tauri
 if (window.__TAURI__) {
     const { listen } = window.__TAURI__.event;
     listen('widget-mode-changed', (event) => {

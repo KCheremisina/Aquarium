@@ -19,6 +19,7 @@
         "resizable": true,
         "decorations": true,
         "transparent": true,
+        "alwaysOnTop": true,
         "focus": true
       }
     ],
